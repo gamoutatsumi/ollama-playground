@@ -6,13 +6,6 @@ services:
     image: ollama/ollama:0.1.16
     volumes:
       - ./ollama:/root/.ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [gpu]
-              driver: nvidia
-              count: all
   litellm:
     restart: unless-stopped
     depends_on: 
@@ -20,6 +13,6 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    command: ["litellm", "--model", "ollama/mistral", "--port" ,"8080", "--host", "0.0.0.0", "--api_base", "http://ollama:11434"]
+    command: ["--model", "ollama/mistral", "--port" ,"8080", "--host", "0.0.0.0", "--api_base", "http://ollama:11434"]
     ports: 
       - 8080:8080
